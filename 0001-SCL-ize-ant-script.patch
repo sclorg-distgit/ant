@@ -1,0 +1,75 @@
+From bd27d06d2d72f406665f6423ccc71c88f8b50a50 Mon Sep 17 00:00:00 2001
+From: Mikolaj Izdebski <mizdebsk@redhat.com>
+Date: Thu, 13 Feb 2014 14:16:31 +0100
+Subject: [PATCH] SCL-ize ant script
+
+---
+ src/script/ant | 21 +++++++++++----------
+ 1 file changed, 11 insertions(+), 10 deletions(-)
+
+diff --git a/src/script/ant b/src/script/ant
+index b5ed5be..e492f8c 100644
+--- a/src/script/ant
++++ b/src/script/ant
+@@ -45,9 +45,9 @@ if $no_config ; then
+   usejikes=$use_jikes_default
+ else
+   # load system-wide ant configuration (ONLY if ANT_HOME has NOT been set)
+-  if [ -z "$ANT_HOME" -o "$ANT_HOME" = "/usr/share/ant" ]; then
+-      if [ -f "/etc/ant.conf" ] ; then
+-          . /etc/ant.conf
++  if [ -z "$ANT_HOME" -o "$ANT_HOME" = "/opt/rh/maven30/root/usr/share/ant" ]; then
++      if [ -f "/opt/rh/maven30/root/etc/ant.conf" ] ; then
++          . /opt/rh/maven30/root/etc/ant.conf
+       fi
+   fi
+ 
+@@ -70,8 +70,8 @@ fi
+ 
+ # Setup Java environment in rpm mode
+ if $rpm_mode ; then
+-  if [ -f /usr/share/java-utils/java-functions ] ; then
+-    . /usr/share/java-utils/java-functions
++  if [ -f /opt/rh/maven30/root/usr/share/java-utils/java-functions ] ; then
++    . /opt/rh/maven30/root/usr/share/java-utils/java-functions
+     set_jvm
+     set_javacmd
+   fi
+@@ -166,12 +166,12 @@ fi
+ # is discouraged as it is not java-version safe. A user should
+ # request optional jars and their dependencies via the OPT_JAR_LIST
+ # variable
+-if $rpm_mode && [ -x /usr/bin/build-classpath ] ; then
+-  LOCALCLASSPATH="$(/usr/bin/build-classpath ant ant-launcher jaxp_parser_impl xml-commons-apis)"
++if $rpm_mode && [ -x /opt/rh/maven30/root/usr/bin/build-classpath ] ; then
++  LOCALCLASSPATH="$(/opt/rh/maven30/root/usr/bin/build-classpath ant ant-launcher xerces-j2 xml-commons-apis)"
+ 
+   # If no optional jars have been specified then build the default list
+   if [ -z "$OPT_JAR_LIST" ] ; then
+-    for file in /etc/ant.d/*; do
++    for file in /opt/rh/maven30/root/etc/ant.d/*; do
+       if [ -f "$file" ]; then
+         case "$file" in
+         *~) ;;
+@@ -189,7 +189,7 @@ if $rpm_mode && [ -x /usr/bin/build-classpath ] ; then
+ 
+   # If the user requested to try to add some other jars to the classpath
+   if [ -n "$OPT_JAR_LIST" ] ; then
+-    _OPTCLASSPATH="$(/usr/bin/build-classpath $OPT_JAR_LIST 2> /dev/null)"
++    _OPTCLASSPATH="$(/opt/rh/maven30/root/usr/bin/build-classpath $OPT_JAR_LIST 2> /dev/null)"
+     if [ -n "$_OPTCLASSPATH" ] ; then 
+       LOCALCLASSPATH="$LOCALCLASSPATH:$_OPTCLASSPATH"
+     fi
+@@ -278,7 +278,8 @@ if $show_help ; then
+   echo $0 '[script options] [options] [target [target2 [target3] ..]]'
+   echo 'Script Options:'
+   echo '  --help, --h            print this message and ant help'
+-  echo '  --noconfig             suppress sourcing of /etc/ant.conf,'
++  echo '  --noconfig             suppress sourcing of'
++  echo '                         /opt/rh/maven30/root/etc/ant.conf,'
+   echo '                         $HOME/.ant/ant.conf, and $HOME/.antrc'
+   echo '                         configuration files'
+   echo '  --usejikes             enable use of jikes by default, unless'
+-- 
+1.8.4.2
+
