@@ -32,15 +32,14 @@
 # OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 #
 
-%bcond_without tests
+%bcond_with tests
 %bcond_without javadoc
 
 %global ant_home %{_datadir}/ant
-%global major_version 1.8
 
 Name:           %{?scl_prefix}%{pkg_name}
-Version:        1.9.2
-Release:        9.24%{?dist}
+Version:        1.9.6
+Release:        0.1%{?dist}
 Epoch:          0
 Summary:        Build tool for java
 Summary(it):    Tool per la compilazione di programmi java
@@ -48,7 +47,7 @@ Summary(fr):    Outil de compilation pour java
 License:        ASL 2.0
 URL:            http://ant.apache.org/
 Source0:        http://archive.apache.org/dist/ant/source/apache-ant-%{version}-src.tar.bz2
-Source2:        apache-ant-%{major_version}.ant.conf
+Source2:        apache-ant-1.8.ant.conf
 
 # Fix some places where copies of classes are included in the wrong jarfiles
 Patch4:         apache-ant-class-path-in-manifest.patch
@@ -73,8 +72,15 @@ Requires:       %{?scl_prefix}xml-commons-apis
 BuildArch:      noarch
 
 %description
-Ant is a platform-independent build tool for java. It's used by apache
-jakarta and xml projects.
+Apache Ant is a Java library and command-line tool whose mission is to
+drive processes described in build files as targets and extension
+points dependent upon each other.  The main known usage of Ant is the
+build of Java applications.  Ant supplies a number of built-in tasks
+allowing to compile, assemble, test and run Java applications.  Ant
+can also be used effectively to build non Java applications, for
+instance C or C++ applications.  More generally, Ant can be used to
+pilot any type of process which can be described in terms of targets
+and tasks.
 
 %description -l fr
 Ant est un outil de compilation multi-plateformes pour java. Il est
@@ -609,6 +615,11 @@ set -e -x
 # -----------------------------------------------------------------------------
 
 %changelog
+* Mon Jan 02 2017 Michael Simacek <msimacek@redhat.com> - 0:1.9.6-0.1
+- Update to upstream version 1.9.6
+- Update description
+- Resolves: rhbz#1401034
+
 * Mon Jan 19 2015 Michal Srb <msrb@redhat.com> - 0:1.9.2-9.24
 - Fix LOCALCLASSPATH
 
