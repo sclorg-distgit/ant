@@ -32,14 +32,14 @@
 # OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 #
 
-%bcond_with tests
+%bcond_without tests
 %bcond_without javadoc
 
 %global ant_home %{_datadir}/ant
 
 Name:           %{?scl_prefix}%{pkg_name}
 Version:        1.9.6
-Release:        0.1%{?dist}
+Release:        1%{?dist}
 Epoch:          0
 Summary:        Build tool for java
 Summary(it):    Tool per la compilazione di programmi java
@@ -615,6 +615,9 @@ set -e -x
 # -----------------------------------------------------------------------------
 
 %changelog
+* Tue Jan 10 2017 Michael Simacek <msimacek@redhat.com> - 0:1.9.6-1
+- Re-enable tests
+
 * Mon Jan 02 2017 Michael Simacek <msimacek@redhat.com> - 0:1.9.6-0.1
 - Update to upstream version 1.9.6
 - Update description
