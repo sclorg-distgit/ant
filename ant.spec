@@ -38,7 +38,7 @@
 
 Name:           %{?scl_prefix}ant
 Version:        1.10.1
-Release:        6.2%{?dist}
+Release:        6.3%{?dist}
 Epoch:          0
 Summary:        Java build tool
 Summary(it):    Tool per la compilazione di programmi java
@@ -477,7 +477,6 @@ cp -pr build/javadocs/* $RPM_BUILD_ROOT%{_javadocdir}/%{pkg_name}
 %config(noreplace) %{_sysconfdir}/%{pkg_name}.conf
 %attr(0755,root,root) %{_bindir}/ant
 %attr(0755,root,root) %{_bindir}/antRun
-%dir %{ant_home}
 %dir %{ant_home}/bin
 %{ant_home}/bin/ant
 %{ant_home}/bin/antRun
@@ -494,6 +493,7 @@ cp -pr build/javadocs/* $RPM_BUILD_ROOT%{_javadocdir}/%{pkg_name}
 %dir %{_sysconfdir}/%{pkg_name}.d
 
 %files lib -f .mfiles-lib
+%dir %{ant_home}
 %dir %{ant_home}/lib
 %{ant_home}/lib/%{pkg_name}.jar
 %{ant_home}/lib/%{pkg_name}-launcher.jar
@@ -601,6 +601,9 @@ cp -pr build/javadocs/* $RPM_BUILD_ROOT%{_javadocdir}/%{pkg_name}
 # -----------------------------------------------------------------------------
 
 %changelog
+* Mon Sep 04 2017 Michael Simacek <msimacek@redhat.com> - 0:1.10.1-6.3
+- Fix directory ownership
+
 * Thu Jun 22 2017 Michael Simacek <msimacek@redhat.com> - 0:1.10.1-6.2
 - Mass rebuild 2017-06-22
 
